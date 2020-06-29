@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 
 const BlogContext = React.createContext();
 
-export const BlogProvider = ({ children }) => {
-    const [blogPost, setBlogPost] = useState([]);
-
-    const addBlogPost =()=>{
-        setBlogPost([...blogPost, { title: `BlogPost number ${blogPost.length + 1}`}]);
+const blogReducer = (state, action)=>{
+    switch(action.type){
+        case 'add_blogpost':
+            return [...state, {title: `Blog Post ${state.length +1}` }]
+        default:
+            return state
     }
-    const editBlogPost =()=>{}
-    const deleteBlogPost =()=>{}
+}
 
-    //This way we can create more states and use it in coresponding Screens
-
-    //But we take alternative and use reducer for this
-
+export const BlogProvider = ({ children }) => {
+    const [blogPost, dispatch] = useReducer(blogReducer, []);
+ 
+    const addBlogPost =()=>{
+        dispatch({type: 'add_blogpost'})
+    }
     return <BlogContext.Provider
-             value={{ data: blogPost, addBlogPost: addBlogPost}}
+             value={{ data: blogPost, addBlogPost: addBlogPost }}
              >
         {children}
     </BlogContext.Provider>
