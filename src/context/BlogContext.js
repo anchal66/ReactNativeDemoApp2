@@ -8,6 +8,12 @@ export const BlogProvider = ({ children }) => {
     const addBlogPost =()=>{
         setBlogPost([...blogPost, { title: `BlogPost number ${blogPost.length + 1}`}]);
     }
+    const editBlogPost =()=>{}
+    const deleteBlogPost =()=>{}
+
+    //This way we can create more states and use it in coresponding Screens
+
+    //But we take alternative and use reducer for this
 
     return <BlogContext.Provider
              value={{ data: blogPost, addBlogPost: addBlogPost}}
